@@ -1,0 +1,66 @@
+#main{
+    display :flex;
+    padding-left: 3%;
+    gap: 30px;
+}
+#nav{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 3%;
+    border: 1px solid transparent;
+    background: rgb(71, 168, 233);
+    color: white;
+    font-family: cursive;
+}
+#sign{
+    display: flex;
+    gap: 20px;
+}
+#search_box{
+    margin-left: 41%;
+    width: 250px;
+    margin-top: 15px;
+}
+#search_results{
+    border: 1px transparent black;
+    padding-left: 10px;
+    width: 250px;
+    margin-left: 40.5%;
+    height: 200px;
+    position: absolute;
+    /* background: white; */
+}
+#maindiv{
+    display: grid;
+    grid-template-columns: repeat(4,23%);
+    grid-gap: 30px;
+    grid-template-rows: 290px;
+    padding: 2%;
+}
+img{
+    width: 99%;
+    height: 200px;
+}
+#random>div>img{
+    height: 350px;
+    width: 900px;
+}
+#random>div{
+    font-family: cursive;
+}
+#latestfood{
+    display: grid;
+    grid-template-columns: repeat(3,30%);
+    grid-gap: 30px;
+    grid-template-rows: 310px;
+    justify-content: center;
+    margin: 10px;
+   
+}
+#latestfood>div{
+    background: skyblue;
+    padding: 15px;
+    font-family: cursive;
+    color: firebrick;
+    font-size: larger;
+}

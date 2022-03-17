@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./styles/nav.css">
+</head>
+<body>
+   <div id="container"></div>
+   <div id="latestfood"></div>
+</body>
+</html>
+
+<script type="module">
+    import navbar from "./components/navbar.js"
+    let container =document.getElementById("container")
+    container.innerHTML =navbar()
+
+     let food = document.getElementById('latestfood')
+
+     async function show(){
+        let url = `https://www.themealdb.com/api/json/v1/1/filter.php?a=Indian`
+        try{
+             let res =await fetch(url)
+             let data =await res.json()
+              let data_arr =data.meals
+              foodshow(data_arr)
+           console.log('  data:',   data_arr)
+        }
+        catch(e){
+            console.log('e:', e)
+        }
+     }
+  show()
+  function foodshow(el){
+    el.forEach(({strMealThumb,strMeal} )=>{
+        let div =document.createElement("div");
+
+        let image =document.createElement("img")
+        image.src = strMealThumb +"/preview"
+
+        let h3 =document.createElement("p")
+        h3.textContent=strMeal
+
+        div.append(image,h3)
+        food.append(div)
+    })
+  }
+</script>

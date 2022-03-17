@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./styles/nav.css">
+</head>
+<body>
+   <div id="container"></div>
+    <div id="random"></div>
+</body>
+</html>
+
+
+<script type="module">
+    import navbar from "./components/navbar.js"
+    let container =document.getElementById("container")
+    container.innerHTML =navbar()
+
+    let random =document.getElementById("random")
+
+
+    async function ran(){
+        let url = 'https://www.themealdb.com/api/json/v1/1/random.php'
+        try{
+            let res =await fetch(url);
+            let data =await res.json()
+              let x =data.meals[0]
+              randomdish(x)
+            console.log(x)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    ran()
+
+    function randomdish(el){
+        let div =document.createElement("div")
+          div.style.backgroundColor = "skyblue"
+          div.style.padding ="19px"
+
+          let img =document.createElement("img")
+          img.src =el.strMealThumb
+
+          let name =document.createElement("h3")
+          name.textContent = `Dish name : ${el.strMeal}`
+          name.style.color ="firebrick"
+
+          let category =document.createElement("p")
+          category.textContent = `Category : ${el.strCategory}`
+
+          let area =document.createElement("p")
+          area.textContent = `Area : ${el.strArea}`
+          let inst =document.createElement("p")
+          inst.textContent = `How to make : ${el.strInstructions}`
+
+          div.append(img,name,category,area,inst)
+          random.append(div)
+    }
+</script>

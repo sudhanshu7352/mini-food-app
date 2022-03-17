@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./styles/nav.css">
+</head>
+<body>
+   <div id="container"></div>
+   <div>
+    <input  id="search_box" type="text " placeholder="Search food">
+    <div id="search_results"></div>
+    
+   </div>
+   <div id="maindiv"></div>
+</body>
+</html>
+
+<!-- //debounce(search,2000) -->
+<script type="module">
+
+    let food_wait;
+   
+    import navbar from "./components/navbar.js"
+    let container =document.getElementById("container")
+    container.innerHTML =navbar()
+    let search_res =document.getElementById("search_results")
+
+    let search_box =document.getElementById('search_box')
+    search_box.addEventListener("input",debounce)
+
+      async function search(){
+           let input_name =document.getElementById("search_box").value
+          let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${input_name}`
+          try{
+            let res =await fetch(url);
+            let data =await res.json()
+            let x =data.meals
+            //  allfood(x)
+            showfood(x)
+            console.log(x)
+          }
+          catch(err){
+              console.log(err)
+          }
+      }
+main()
+async function main(){
+          
+          let url2 = `https://www.themealdb.com/api/json/v1/1/search.php?s=chicken`
+          try{
+            let res =await fetch(url2);
+            let data =await res.json()
+            let x =data.meals
+              allfood(x)
+            // showfood(x)
+            console.log(x)
+          }
+          catch(err){
+              console.log(err)
+          }
+      } 
+
+     function showfood(el){
+        search_res.innerText =null
+        search_res.style.overflow ="Scroll"
+        search_res.style.background="white"
+        el.forEach((el) => {
+            let div = document.createElement("div")
+            div.style.cursor ="pointer"
+             div.onclick =()=>{
+                 getfood(el)
+             }
+            
+            let name =document.createElement("p")
+            name.textContent =el.strMeal
+
+            div.append(name)
+            search_res.append(div)
+        });
+     }
+      let maindiv =document.getElementById("maindiv")
+   function getfood(el){
+       maindiv.innerText =null
+       search_res.style.display="none"
+       console.log(el)
+    let div =document.createElement("div");
+    div.style.background ="orange"
+    div.style.padding ="7px"
+     div.style.fontFamily ="cursive"
+
+    let img =document.createElement("img");
+    img.src  =el.strMealThumb 
+
+    let name =document.createElement("p")
+      name.textContent =el.strMeal
+      let category =document.createElement("p")
+      category.textContent = "Category : "+ el.strCategory
+      
+      div.append(img,name,category)
+      maindiv.append(div)
+   }
+
+
+     function allfood(el){
+        
+        el.forEach((el)=>{
+          let div =document.createElement("div")
+          div.style.backgroundColor = "skyblue"
+          div.style.padding ="9px"
+
+          let img =document.createElement("img")
+          img.src =el.strMealThumb
+
+          let name =document.createElement("p")
+          name.textContent = `Dish name : ${el.strMeal}`
+
+          let area =document.createElement("p")
+          area.textContent = `Area : ${el.strArea}`
+
+          div.append(img,name,area)
+          maindiv.append(div)
+        })
+     }
+     function debounce(func,delay){
+         if(food_wait){
+             clearTimeout(food_wait)
+         } 
+         food_wait =setTimeout(()=>{
+            search()
+         },2000)
+     }
+</script>
